@@ -230,6 +230,40 @@ describe('index', function() {
       });
     });
 
+    it('should create with pre initialized controllers object', function (done) {
+		var config = _.clone(DEFAULT_PROJECT_CONFIG);
+		var controllers = {
+			pre_initialized_controller: {
+				preInitializedOpetation: function(req, res, next) {
+			       res.json('Hello, Its pre-initialized controller');
+			       next();
+                }
+            }
+		};
+		config.controllers = controllers;
+		SwaggerRunner.create(config, function(err, runner) {
+			if (err) {
+				return done(err);
+			}
+
+			var app = require('connect')();
+			runner.connectMiddleware().register(app);
+
+			var request = require('supertest');
+
+			request(app)
+				.get('/pre_initialized_controllers')
+				.set('Accept', 'application/json')
+				.expect(200)
+				.expect('Content-Type', /json/)
+				.end(function(err, res) {
+					should.not.exist(err);
+					res.body.should.eql('Hello, Its pre-initialized controller');
+					done();
+				});
+		});
+	});
+
     beforeEach( function() {
       //force to load fresh of require('config')
       var xConfigModulePath = /node_modules[\\\/]config[\\\/]/;

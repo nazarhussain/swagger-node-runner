@@ -365,7 +365,19 @@ paths:
         default:
           description: Error
           schema:
-            $ref: "#/definitions/ErrorResponse"         
+            $ref: "#/definitions/ErrorResponse"
+  /pre_initialized_controllers:
+    x-swagger-router-controller: pre_initialized_controller
+    get:
+      x-controller-interface: middleware
+      operationId: preInitializedOpetation
+      responses:
+        200:
+          description: Success
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
 
 definitions:
   HelloWorldResponse:

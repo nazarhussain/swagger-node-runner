@@ -44,7 +44,7 @@ module.exports = function create(fittingDef, bagpipes) {
     return path.resolve(appRoot, dir);
   });
 
-  var controllerFunctionsCache = {};
+  var controllerFunctionsCache = swaggerNodeRunner.config.swagger.controllers || {};
 
   return function swagger_router(context, cb) {
     debug('exec');
