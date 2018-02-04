@@ -263,6 +263,8 @@ function createPipes(self) {
     return path.resolve(config.appRoot, dir);
   });
 
+  var fittings = config.fittings || {};
+
   // legacy support: set up a default piping for traditional swagger-node if nothing is specified
   if (!config.bagpipes || config.bagpipes ==='DEFAULTS_TEST') {
 
@@ -301,7 +303,8 @@ function createPipes(self) {
   var pipesConfig = {
     userFittingsDirs: fittingsDirs,
     userViewsDirs: viewsDirs,
-    swaggerNodeRunner: self
+    swaggerNodeRunner: self,
+    fittings: fittings
   };
   return bagpipes.create(pipesDefs, pipesConfig);
 }
